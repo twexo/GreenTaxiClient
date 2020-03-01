@@ -73,10 +73,11 @@ public class MyService extends Service {
                         if (type == 1) {
                             int time = dataSnapshot.child("time").getValue(Integer.class);
                             if (time > 0) {
-                                msg = "Soferul a confirmat ca va ajunge in " + time + " minute.";
+                                msg = numeSofer+" a confirmat ca va ajunge in " + time + " minute. \n"+id;
                                 Intent notificationIntent = new Intent(MyService.this, ClientConfirmare.class);
                                 notificationIntent.putExtra("id", id);
                                 notificationIntent.putExtra("numeSofer", numeSofer);
+                                notificationIntent.putExtra("myphNr",receiverid);
                                 notificationIntent.putExtra("time", time);
                                 notificationIntent.putExtra("smsid",dataSnapshot.getKey());
                                 notificationIntent.putExtra("notificationId",notificationId);

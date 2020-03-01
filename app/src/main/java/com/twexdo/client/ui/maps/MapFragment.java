@@ -284,7 +284,7 @@ public class MapFragment extends Fragment {
                     CameraPosition cameraPosition = new CameraPosition.Builder()
                             .target(getGPS())      // Sets the center of the map to location user
                             .zoom(15)                   // Sets the zoom
-                            .bearing(90)                // Sets the orientation of the camera to east
+                            //.bearing(-15)                // Sets the orientation of the camera to east
                             .tilt(40)                   // Sets the tilt of the camera to 30 degrees
                             .build();                   // Creates a CameraPosition from the builder
                     mMap.animateCamera(CameraUpdateFactory.newCameraPosition(cameraPosition));

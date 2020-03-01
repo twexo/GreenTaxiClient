@@ -9,11 +9,11 @@
             android:icon="@drawable/ic_layers_black_24dp"
             android:title="@string/menu_home" />
         <item
-            android:id="@+id/nav_gallery"
+            android:id="@+id/nav_soferi"
             android:icon="@drawable/ic_person_black_24dp"
             android:title="@string/menu_gallery" />
         <item
-            android:id="@+id/nav_slideshow"
+            android:id="@+id/nav_info"
             android:icon="@drawable/ic_info_black_24dp"
             android:title="@string/menu_slideshow" />
 

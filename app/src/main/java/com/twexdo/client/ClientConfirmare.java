@@ -16,7 +16,7 @@ public class ClientConfirmare extends Activity {
 
     TextView info;
     int timp;
-    String nrTelefonSofer,numeSofer;
+    String nrTelefonSofer="",numeSofer="";
     Button accept,refuz;
     DatabaseReference databaseReference;
     static String  senderId,smsid;
@@ -48,16 +48,22 @@ public class ClientConfirmare extends Activity {
             timp=extras.getInt("time");
             numeSofer=extras.getString("numeSofer");
             nrTelefonSofer=extras.getString("id");
+            senderId=extras.getString("myphNr");
             smsid=extras.getString("smsid");
 
             setTitle("Comanda Acceptata");
-            info.setText(numeSofer+" poate ajunge in aproximtiv "+timp+" minute");
+            info.setText(nrTelefonSofer+" "+numeSofer+" poate ajunge in aproximtiv "+timp+" minute");
             notificationId=extras.getInt("notificationId");
 
         }
         accept.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
+                if(nrTelefonSofer.length()<9)
+                    Toast.makeText(ClientConfirmare.this, "nrTelefonSofer :"+nrTelefonSofer, Toast.LENGTH_SHORT).show();
+                if(senderId.length()<9)
+                    Toast.makeText(ClientConfirmare.this, "senderId :"+senderId, Toast.LENGTH_SHORT).show();
+
                 databaseReference.child("mesaj").push().setValue(new sms(nrTelefonSofer,senderId,true));
                 databaseReference.child("mesaj").child(smsid).setValue(null);
                 Toast.makeText(getApplicationContext(), "Comanda plasata!", Toast.LENGTH_SHORT).show();
