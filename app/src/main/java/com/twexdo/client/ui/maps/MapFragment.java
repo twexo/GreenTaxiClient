@@ -69,15 +69,12 @@ public class MapFragment extends Fragment {
                 ActivityCompat.checkSelfPermission(getContext(),
                         Manifest.permission.CALL_PHONE) != PackageManager.PERMISSION_GRANTED ||
                 ActivityCompat.checkSelfPermission(getContext(),
-                        Manifest.permission.WRITE_EXTERNAL_STORAGE) != PackageManager.PERMISSION_GRANTED ||
-                ActivityCompat.checkSelfPermission(getContext(),
-                        Manifest.permission.READ_EXTERNAL_STORAGE) != PackageManager.PERMISSION_GRANTED) {
+                        Manifest.permission.WAKE_LOCK) != PackageManager.PERMISSION_GRANTED ) {
             requestPermissions(
                     new String[]{Manifest.permission.ACCESS_COARSE_LOCATION,
                             Manifest.permission.ACCESS_FINE_LOCATION,
                             Manifest.permission.CALL_PHONE,
-                            Manifest.permission.WRITE_EXTERNAL_STORAGE,
-                            Manifest.permission.READ_EXTERNAL_STORAGE}, 10);
+                            Manifest.permission.WAKE_LOCK}, 10);
         } else {
             Log.e("DB", "PERMISSION GRANTED");
             loc();

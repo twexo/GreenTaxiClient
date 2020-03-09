@@ -38,7 +38,10 @@ public class SoferAdapter extends ArrayAdapter<Sofer> {
         TextView name = convertView.findViewById(R.id.row_name);
         TextView nrtel = convertView.findViewById(R.id.row_nrtel);
         TextView status = convertView.findViewById(R.id.row_status);
+        TextView lastSignal = convertView.findViewById(R.id.row_lastSignal);
 
+
+        lastSignal.setText(sofer.getLastSignal());
         name.setText(sofer.getNume());
         nrtel.setText(sofer.getTelefon());
         imageView = convertView.findViewById(R.id.image);

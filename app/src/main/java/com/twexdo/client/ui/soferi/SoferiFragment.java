@@ -116,6 +116,7 @@ public class SoferiFragment extends Fragment {
                         String name = String.valueOf(snap.child("nume").getValue(String.class));
                         int sts = snap.child("status").getValue(Integer.class);
                         String nrtel = String.valueOf(snap.child("nrtel").getValue(String.class));
+                        String lastSignal = String.valueOf(snap.child("lastSignal").getValue(String.class));
                         String url = String.valueOf(snap.child("url").getValue(String.class));
                         boolean exists = false;
                         int index = 0;
@@ -129,13 +130,13 @@ public class SoferiFragment extends Fragment {
                         }
                         if (!exists && nrtel != "null" && name != "null") {
                             Log.e("SoferiFragment", "Adaugare " + name);
-                            Sofer newSofer = new Sofer(name, nrtel, sts, url);
+                            Sofer newSofer = new Sofer(name, nrtel, sts, url,lastSignal);
                             adapter.add(newSofer);
                         } else if (nrtel != "null" && name != "null") {
                             Log.e("SoferiFragment", "Rescriere " + name);
                             adapter.removeItem(savedindex);
                             adapter.notifyDataSetChanged();
-                            Sofer nSofer = new Sofer(name, nrtel, sts, url);
+                            Sofer nSofer = new Sofer(name, nrtel, sts, url,lastSignal);
                             adapter.add(nSofer);
                         }
 

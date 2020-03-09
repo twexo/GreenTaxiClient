@@ -2,56 +2,98 @@
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
+    android:background="@drawable/side_nav_bar_cornered"
     android:orientation="horizontal"
-    android:padding="16dp"
-    android:background="@drawable/side_nav_bar_cornered">
+    android:padding="16dp">
 
-
-    <ImageView
-        android:id="@+id/image"
-        android:layout_margin="5dp"
-        android:layout_width="wrap_content"
+    <LinearLayout
+        android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:src="@drawable/ic_person_black_24dp"
-        android:foregroundGravity="center"
-        android:background="@drawable/side_nav_bar_cornered" />
+        android:layout_margin="5dp"
+        android:layout_weight="2"
+        android:orientation="vertical"
+        android:outlineSpotShadowColor="#000000">
+
+        <ImageView
+            android:layout_gravity="center"
+            android:gravity="center"
+            android:id="@+id/image"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_margin="5dp"
+            android:background="@drawable/side_nav_bar_cornered"
+            android:foregroundGravity="center"
+            android:src="@drawable/ic_person_black_24dp" />
+
+        <TextView
+            android:layout_gravity="center"
+            android:gravity="center"
+            android:id="@+id/row_name"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_margin="5dp"
+            android:text="Name"
+            android:textColor="#000000"
+            android:textSize="20sp"
+            android:textStyle="bold" />
+    </LinearLayout>
 
     <LinearLayout
         android:id="@+id/presss"
-        android:outlineSpotShadowColor="#000000"
-        android:layout_margin="5dp"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
+        android:layout_margin="5dp"
+        android:layout_weight="1"
         android:orientation="vertical"
-        >
-        <TextView
-            android:id="@+id/row_name"
-            android:layout_margin="5dp"
-            android:textSize="20sp"
-            android:textStyle="bold"
-            android:textColor="#000000"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:text="Name"/>
+        android:outlineSpotShadowColor="#000000">
+
         <TextView
             android:id="@+id/row_nrtel"
-            android:layout_margin="5dp"
-            android:textSize="15sp"
-            android:textStyle="bold"
-            android:textColor="#000000"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:text="(0000-000-000)"/>
+            android:layout_margin="5dp"
+            android:text="(0000-000-000)"
+            android:visibility="gone"
+            android:textColor="#000000"
+            android:textSize="15sp"
+            android:textStyle="bold" />
+
         <TextView
             android:id="@+id/row_status"
-            android:layout_margin="5dp"
-            android:textSize="15sp"
-            android:textStyle="bold"
-            android:textColor="#000000"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:text="STATUS"/>
+            android:layout_margin="5dp"
+            android:layout_weight="1"
+            android:text="STATUS"
+            android:textColor="#000000"
+            android:textSize="15sp"
+            android:textStyle="bold" />
 
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:orientation="vertical">
+
+            <TextView
+                android:textFontWeight="1"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_margin="5dp"
+                android:layout_weight="1"
+                android:text="Vazut ultima oara:"
+                android:textColor="#000000" />
+
+            <TextView
+                android:id="@+id/row_lastSignal"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_margin="5dp"
+                android:layout_weight="2"
+                android:text="Last u"
+                android:textColor="#000000"
+                android:textSize="15sp"
+                android:textStyle="bold" />
+        </LinearLayout>
     </LinearLayout>
 
 

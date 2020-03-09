@@ -33,6 +33,15 @@ public class MainActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
 
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M
+        ) {
+            if(checkSelfPermission(Manifest.permission.WAKE_LOCK)!=PackageManager.PERMISSION_GRANTED){
+                    requestPermissions(new String[]{
+                        Manifest.permission.WAKE_LOCK
+                },200);
+            }
+        }
+
         Toolbar toolbar = findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
 
@@ -62,6 +71,14 @@ public class MainActivity extends AppCompatActivity {
         }
 
 }
+
+    @Override
+    protected void onDestroy() {
+        super.onDestroy();
+        Intent i=new Intent(getApplicationContext(),MyService.class);
+        stopService(i);
+    }
+
     @Override
     public void onRequestPermissionsResult(int requestCode, @NonNull String[] permissions, @NonNull int[] grantResults) {
         if (requestCode == 10) {

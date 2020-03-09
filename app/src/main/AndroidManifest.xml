@@ -11,7 +11,7 @@
     <uses-permission android:name="android.permission.READ_EXTERNAL_STORAGE" />
     <uses-permission android:name="android.permission.READ_PHONE_STATE" />
     <uses-permission android:name="android.permission.FOREGROUND_SERVICE" />
-
+    <uses-permission android:name="android.permission.WAKE_LOCK" />
     <application
         android:icon="@mipmap/ic_launcher"
         android:label="@string/app_name"
@@ -22,6 +22,7 @@
         <activity android:theme="@android:style/Theme.Dialog"  android:name=".ClientConfirmare" />
 
         <service
+            android:foregroundServiceType="dataSync"
             android:name=".MyService"
             android:enabled="true"
             android:exported="true">

@@ -13,18 +13,26 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         />
-    <EditText
+    <TextView
+        android:id="@+id/locatie"
+        android:textColor="#000"
+        android:text="Apasa pe mapa pentru a ne oferi o loatie clara:"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:hint="str. Republicii nr. xyz "
-        android:id="@+id/sms_adresa"
         />
+        <com.google.android.gms.maps.MapView
+            android:layout_weight="2"
+            android:id="@+id/mapView"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent" />
+
     <TextView
         android:textColor="#000"
         android:text="Va rugam sa ne oferiti un reper ."
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         />
+
     <EditText
         android:id="@+id/sms_reper"
         android:layout_width="match_parent"
