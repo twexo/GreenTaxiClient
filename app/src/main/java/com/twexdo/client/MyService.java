@@ -13,7 +13,6 @@ import android.net.Uri;
 import android.os.Build;
 import android.os.IBinder;
 import android.os.PowerManager;
-import android.telephony.TelephonyManager;
 import android.util.Log;
 import android.widget.Toast;
 
@@ -21,6 +20,7 @@ import androidx.annotation.Nullable;
 import androidx.core.app.NotificationCompat;
 import androidx.core.app.NotificationManagerCompat;
 
+import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.database.ChildEventListener;
 import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
@@ -33,7 +33,7 @@ import java.util.Random;
 public class MyService extends Service {
     private static final int NOTIF_ID = 2021;
     private final String TAG="MyService:TAG";
-    public String myPhoneNumber = "";
+    public String myPhoneNumber = "0";
     String msg, id,numeSofer;
     double x, y;
     int timp;
@@ -102,7 +102,7 @@ public class MyService extends Service {
             @Override
             public void onChildAdded(DataSnapshot dataSnapshot, String s) {
                 notificationId = new Random().nextInt();
-
+                getMyPhoneNumber();
                 receiverid = dataSnapshot.child("to").getValue(String.class);
                 try{
 
@@ -227,13 +227,12 @@ public class MyService extends Service {
     }
     @SuppressLint({"MissingPermission"})
     private void getMyPhoneNumber(){
-
-        TelephonyManager tmgr= (TelephonyManager) getSystemService(Context.TELEPHONY_SERVICE);
-        //try{ myPhoneNumber= Objects.requireNonNull(tmgr).getLine1Number();}catch (Exception e){  myPhoneNumber="";Toast.makeText(getApplicationContext(), e.toString(), Toast.LENGTH_SHORT).show();}
-
-            myPhoneNumber = Objects.requireNonNull(tmgr).getSubscriberId();
-
-        Toast.makeText(getApplicationContext(), "my phone is " +myPhoneNumber, Toast.LENGTH_SHORT).show();
+        if(myPhoneNumber.length()<9)
+            try {
+                myPhoneNumber = FirebaseAuth.getInstance().getCurrentUser().getPhoneNumber();
+            }catch (Exception e){
+                myPhoneNumber="0";
+            }
     }
     private Notification getNotification() {
 

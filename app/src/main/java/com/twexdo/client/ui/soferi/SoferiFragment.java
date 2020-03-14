@@ -17,6 +17,7 @@ import android.widget.Toast;
 import androidx.appcompat.app.AlertDialog;
 import androidx.fragment.app.Fragment;
 
+import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
@@ -26,6 +27,7 @@ import com.twexdo.client.MainActivity;
 import com.twexdo.client.R;
 import com.twexdo.client.Sofer;
 import com.twexdo.client.SoferAdapter;
+import com.twexdo.client.LogInActivity;
 
 import java.util.ArrayList;
 
@@ -76,11 +78,19 @@ public class SoferiFragment extends Fragment {
                             new DialogInterface.OnClickListener() {
                                 public void onClick(DialogInterface dialog, int which) {
                                    // Toast.makeText(getActivity(), "TRIMITERE MESAJ", Toast.LENGTH_SHORT).show();
-                                    Intent intent = new Intent(getActivity(), SmsToDriver.class);
-                                    intent.putExtra("nr_tel_soferCerut",telefon);
-                                    intent.putExtra("nume_soferCerut",nume);
 
-                                    startActivity(intent);
+                                    if(FirebaseAuth.getInstance().getCurrentUser()!=null)
+                                    {
+                                        Intent intent = new Intent(getActivity(), SmsToDriver.class);
+                                        intent.putExtra("nr_tel_soferCerut",telefon);
+                                        intent.putExtra("nume_soferCerut",nume);
+
+                                        startActivity(intent);
+                                    }else{
+                                        Intent intent = new Intent(getActivity(), LogInActivity.class);
+                                        startActivity(intent);
+                                    }
+
                                     dialog.dismiss();
                                 }
                             });

@@ -33,10 +33,10 @@ import com.google.android.gms.maps.model.LatLng;
 import com.google.android.gms.maps.model.MarkerOptions;
 import com.google.android.gms.tasks.OnFailureListener;
 import com.google.android.gms.tasks.OnSuccessListener;
+import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 import com.twexdo.client.MainActivity;
-import com.twexdo.client.PlacesAutoCompleteAdapter;
 import com.twexdo.client.R;
 import com.twexdo.client.sms;
 
@@ -56,7 +56,6 @@ public class SmsToDriver extends AppCompatActivity implements GoogleApiClient.On
     boolean allpermissionGaranted = false;
     String myPhoneNr;
     KeyEvent keyEvent;
-    private PlacesAutoCompleteAdapter placesAutoCompleteAdapter;
     private GoogleApiClient googleApiClient;
 
     @Override
@@ -72,15 +71,6 @@ public class SmsToDriver extends AppCompatActivity implements GoogleApiClient.On
         mMapView = findViewById(R.id.mapView);
         mMapView.onCreate(savedInstanceState);
 
-//        placesAutoCompleteAdapter = new PlacesAutoCompleteAdapter(this, googleApiClient, new LatLngBounds(new LatLng(-40, -20), new LatLng(50, 30)), null);
-//
-//        googleApiClient = new GoogleApiClient.Builder(this)
-//                .addApi(Places.GEO_DATA_API)
-//                .addApi(Places.PLACE_DETECTION_API)
-//                .enableAutoManage(this, this)
-//                .build();
-
-        // adresa.setAdapter(placesAutoCompleteAdapter);
 
 
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M) {
@@ -146,7 +136,7 @@ public class SmsToDriver extends AppCompatActivity implements GoogleApiClient.On
 
 
     private void getMyPhoneNumber() {
-   myPhoneNr="0744857875";
+   myPhoneNr= FirebaseAuth.getInstance().getCurrentUser().getPhoneNumber();
     }
 
     public void sendMessage(String _myPhoneNr, String addresa, String reper,double x,double y) {

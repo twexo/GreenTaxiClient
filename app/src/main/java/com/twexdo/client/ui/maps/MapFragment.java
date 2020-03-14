@@ -295,69 +295,6 @@ public class MapFragment extends Fragment {
 
 
     }
-//    String statStre,namee;
-//    float colore;
-//    public void animateMarker(final Marker marker, String name,int stat, final LatLng toPosition,
-//                              final boolean hideMarker) {
-//        namee=name;
-//        Log.e("ANIMATEM",name+" "+stat+" "+hideMarker);
-//
-//        switch (stat) {
-//            default:
-//                colore = BitmapDescriptorFactory.HUE_AZURE;
-//                statStre = "ERROR";
-//
-//                break;
-//            case 1:
-//                colore = BitmapDescriptorFactory.HUE_GREEN;
-//                statStre = "LIBER";
-//                break;
-//            case 2:
-//                colore = BitmapDescriptorFactory.HUE_RED;
-//                statStre = "OCUPAT";
-//                break;
-//            case 3:
-//                colore = BitmapDescriptorFactory.HUE_VIOLET;
-//                statStre = "DUBLU OCUPAT";
-//                break;
-//        }
-//
-//        final Handler handler = new Handler();
-//        final long start = SystemClock.uptimeMillis();
-//        Projection proj = googleMap2.getProjection();
-//        Point startPoint = proj.toScreenLocation(marker.getPosition());
-//        final LatLng startLatLng = proj.fromScreenLocation(startPoint);
-//        final long duration = 500;
-//
-//        final LinearInterpolator interpolator = new LinearInterpolator();
-//
-//        handler.post(new Runnable() {
-//            @Override
-//            public void run() {
-//                long elapsed = SystemClock.uptimeMillis() - start;
-//                float t = interpolator.getInterpolation((float) elapsed
-//                        / duration);
-//                double lng = t * toPosition.longitude + (1 - t)
-//                        * startLatLng.longitude;
-//                double lat = t * toPosition.latitude + (1 - t)
-//                        * startLatLng.latitude;
-//                marker.setPosition(new LatLng(lat, lng));
-//                marker.setIcon(BitmapDescriptorFactory.defaultMarker(colore));
-//                marker.setTitle(namee+" ("+statStre+")");
-//
-//                if (t < 1.0) {
-//                    // Post again 16ms later.
-//                    handler.postDelayed(this, 16);
-//                } else {
-//                    if (hideMarker) {
-//                        marker.setVisible(false);
-//                    } else {
-//                        marker.setVisible(true);
-//                    }
-//                }
-//            }
-//        });
-//    }
 
     @SuppressLint("MissingPermission")
     private LatLng getGPS() {
