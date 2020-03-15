@@ -143,7 +143,10 @@ public class SmsToDriver extends AppCompatActivity implements GoogleApiClient.On
         try {
             if (_myPhoneNr.length() < 9)
                 Toast.makeText(getApplicationContext(), "Nu am putut identifica nr. dvs. de telefon:"+_myPhoneNr, Toast.LENGTH_SHORT).show();
+            if(s_adresa.length()<5){
+                Toast.makeText(getApplicationContext(), "Nu am putut identifica locatia dvs.:"+_myPhoneNr, Toast.LENGTH_SHORT).show();
 
+            }
             else {
                 try {
                     databaseReference = FirebaseDatabase.getInstance().getReference();
