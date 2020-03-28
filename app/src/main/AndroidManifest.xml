@@ -19,23 +19,22 @@
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
         android:theme="@style/AppTheme">
-        <activity android:name=".LogInActivity">
+        <service
+            android:name=".FMessagingService"
+            android:enabled="true"
+            android:exported="true">
+            <intent-filter>
+                <action android:name="com.google.firebase.MESSAGING_EVENT" />
+            </intent-filter>
+        </service>
 
-        </activity>
+        <activity android:name=".LogInActivity"></activity>
         <activity android:name=".ui.soferi.SmsToDriver" />
         <activity
             android:name=".ClientConfirmare"
             android:theme="@android:style/Theme.Dialog" />
 
-        <service
-            android:name=".MyService"
-            android:enabled="true"
-            android:exported="true"
-            android:foregroundServiceType="dataSync">
-            <intent-filter>
-                <action android:name="com.google.firebase.MESSAGING_EVENT" />
-            </intent-filter>
-        </service>
+
 
         <meta-data
             android:name="com.google.android.gms.version"

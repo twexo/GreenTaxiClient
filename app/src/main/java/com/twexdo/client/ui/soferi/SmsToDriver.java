@@ -36,6 +36,7 @@ import com.google.android.gms.tasks.OnSuccessListener;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
+import com.google.firebase.iid.FirebaseInstanceId;
 import com.twexdo.client.MainActivity;
 import com.twexdo.client.R;
 import com.twexdo.client.sms;
@@ -94,10 +95,12 @@ public class SmsToDriver extends AppCompatActivity implements GoogleApiClient.On
             @Override
             public void onClick(View view) {
                 try {
+                    getMyPhoneNumber();
                     sendMessage(myPhoneNr, getAddressName(clientLocation.latitude, clientLocation.longitude), reper.getText().toString(), clientLocation.latitude, clientLocation.longitude);
-                    finish();
+
                 }catch (Exception e){
-                    Toast.makeText(getApplicationContext(), "Te rog ofera-ne locatia ta", Toast.LENGTH_SHORT).show();
+
+                    Toast.makeText(getApplicationContext(), e.getMessage(), Toast.LENGTH_SHORT).show();
                 }
 
             }
@@ -136,14 +139,19 @@ public class SmsToDriver extends AppCompatActivity implements GoogleApiClient.On
 
 
     private void getMyPhoneNumber() {
-   myPhoneNr= FirebaseAuth.getInstance().getCurrentUser().getPhoneNumber();
+                try {
+                    myPhoneNr = FirebaseAuth.getInstance().getCurrentUser().getPhoneNumber();
+                }catch (Exception e){
+                    myPhoneNr="";
+                    Toast.makeText(this, "Nu v-am putut autentifica...", Toast.LENGTH_SHORT).show();
+                }
     }
 
-    public void sendMessage(String _myPhoneNr, String addresa, String reper,double x,double y) {
+    public void sendMessage(final String _myPhoneNr, String addresa, String reper, double x, double y) {
         try {
             if (_myPhoneNr.length() < 9)
                 Toast.makeText(getApplicationContext(), "Nu am putut identifica nr. dvs. de telefon:"+_myPhoneNr, Toast.LENGTH_SHORT).show();
-            if(s_adresa.length()<5){
+            else if(addresa.length()<5){
                 Toast.makeText(getApplicationContext(), "Nu am putut identifica locatia dvs.:"+_myPhoneNr, Toast.LENGTH_SHORT).show();
 
             }
@@ -156,6 +164,8 @@ public class SmsToDriver extends AppCompatActivity implements GoogleApiClient.On
                         @Override
                         public void onSuccess(Void aVoid) {
                             Toast.makeText(getApplicationContext(), "Comanda a fost trimisa cu succes!", Toast.LENGTH_SHORT).show();
+                            databaseReference.child("tokens").child(_myPhoneNr).setValue(FirebaseInstanceId.getInstance().getToken());
+                            finish();
                         }
                     })
                             .addOnFailureListener(new OnFailureListener() {
@@ -165,7 +175,7 @@ public class SmsToDriver extends AppCompatActivity implements GoogleApiClient.On
                                 }
                             });
                 }catch (Exception e){
-                    Toast.makeText(getApplicationContext(), "Te rog oferane locatia ta"+e.toString(), Toast.LENGTH_SHORT).show();
+                    Toast.makeText(getApplicationContext(), "Te rog oferane locatia ta"+e.getMessage(), Toast.LENGTH_SHORT).show();
                 }
             }
 
@@ -256,14 +266,23 @@ public class SmsToDriver extends AppCompatActivity implements GoogleApiClient.On
     }
     @SuppressLint("MissingPermission")
     private LatLng getGPS() {
-        LocationManager lm = (LocationManager) MainActivity.getContext().getSystemService(Context.LOCATION_SERVICE);
-        List<String> providers = lm.getProviders(true);
 
+        LocationManager lm = (LocationManager) MainActivity.getContext().getSystemService(Context.LOCATION_SERVICE);
+        List<String> providers=null;
+        try {
+            providers = lm.getProviders(true);
+        }catch (Exception e){
+            Toast.makeText(this, e.getMessage(), Toast.LENGTH_SHORT).show();
+        }
         Location l = null;
 
         for (int i = providers.size() - 1; i >= 0; i--) {
             l = lm.getLastKnownLocation(providers.get(i));
             if (l != null) break;
+        }
+        if(l==null) {
+            Toast.makeText(this, "Nu am putut ", Toast.LENGTH_SHORT).show();
+            return new LatLng(0,0);
         }
 
         return new LatLng(l.getLatitude(), l.getLongitude());
@@ -278,13 +297,8 @@ public class SmsToDriver extends AppCompatActivity implements GoogleApiClient.On
 
             Log.v("IGA", "Address" + add);
             return add;
-            // Toast.makeText(this, "Address=>" + add,
-            // Toast.LENGTH_SHORT).show();
-
-            // TennisAppActivity.showDialog(add);
         } catch (IOException e) {
-            // TODO Auto-generated catch block
-            e.printStackTrace();
+
             Toast.makeText(this, e.getMessage(), Toast.LENGTH_SHORT).show();
         }
         return add;

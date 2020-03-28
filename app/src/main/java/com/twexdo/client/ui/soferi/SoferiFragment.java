@@ -45,6 +45,7 @@ public class SoferiFragment extends Fragment {
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         View rootView = inflater.inflate(R.layout.fragment_soferi, container, false);
+      try{
         t = rootView.findViewById(R.id.textView);
         myRef = db.getReference("soferi");
         listView = rootView.findViewById(R.id.listView);
@@ -77,16 +78,15 @@ public class SoferiFragment extends Fragment {
                     alertDialog.setButton(AlertDialog.BUTTON_NEGATIVE, "MESAJ",
                             new DialogInterface.OnClickListener() {
                                 public void onClick(DialogInterface dialog, int which) {
-                                   // Toast.makeText(getActivity(), "TRIMITERE MESAJ", Toast.LENGTH_SHORT).show();
+                                    // Toast.makeText(getActivity(), "TRIMITERE MESAJ", Toast.LENGTH_SHORT).show();
 
-                                    if(FirebaseAuth.getInstance().getCurrentUser()!=null)
-                                    {
+                                    if (FirebaseAuth.getInstance().getCurrentUser() != null) {
                                         Intent intent = new Intent(getActivity(), SmsToDriver.class);
-                                        intent.putExtra("nr_tel_soferCerut",telefon);
-                                        intent.putExtra("nume_soferCerut",nume);
+                                        intent.putExtra("nr_tel_soferCerut", telefon);
+                                        intent.putExtra("nume_soferCerut", nume);
 
                                         startActivity(intent);
-                                    }else{
+                                    } else {
                                         Intent intent = new Intent(getActivity(), LogInActivity.class);
                                         startActivity(intent);
                                     }
@@ -140,13 +140,13 @@ public class SoferiFragment extends Fragment {
                         }
                         if (!exists && nrtel != "null" && name != "null") {
                             Log.e("SoferiFragment", "Adaugare " + name);
-                            Sofer newSofer = new Sofer(name, nrtel, sts, url,lastSignal);
+                            Sofer newSofer = new Sofer(name, nrtel, sts, url, lastSignal);
                             adapter.add(newSofer);
                         } else if (nrtel != "null" && name != "null") {
                             Log.e("SoferiFragment", "Rescriere " + name);
                             adapter.removeItem(savedindex);
                             adapter.notifyDataSetChanged();
-                            Sofer nSofer = new Sofer(name, nrtel, sts, url,lastSignal);
+                            Sofer nSofer = new Sofer(name, nrtel, sts, url, lastSignal);
                             adapter.add(nSofer);
                         }
 
@@ -168,7 +168,7 @@ public class SoferiFragment extends Fragment {
         };
 
         myRef.addValueEventListener(postListener);
-
+    }catch(Exception e){}
 
         return rootView;
     }

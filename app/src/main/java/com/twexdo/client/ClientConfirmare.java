@@ -12,6 +12,10 @@ import android.widget.Toast;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 
+import java.text.SimpleDateFormat;
+import java.util.Calendar;
+import java.util.Date;
+
 public class ClientConfirmare extends Activity {
 
     TextView info;
@@ -19,7 +23,7 @@ public class ClientConfirmare extends Activity {
     String nrTelefonSofer="",numeSofer="";
     Button accept,refuz;
     DatabaseReference databaseReference;
-    static String  senderId,smsid;
+    static String myPhoneNumber,smsid;
     NotificationManager mNotificationManager;
     int notificationId;
     @Override
@@ -48,7 +52,7 @@ public class ClientConfirmare extends Activity {
             timp=extras.getInt("time");
             numeSofer=extras.getString("numeSofer");
             nrTelefonSofer=extras.getString("id");
-            senderId=extras.getString("myphNr");
+            myPhoneNumber =extras.getString("myphNr");
             smsid=extras.getString("smsid");
 
             setTitle("Comanda Acceptata");
@@ -56,19 +60,25 @@ public class ClientConfirmare extends Activity {
             notificationId=extras.getInt("notificationId");
 
         }
+        //Todo:adauga o optiune pentru user ca acesta sa poata anula comanda
+
+
         accept.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                if(nrTelefonSofer.length()<9)
-                    Toast.makeText(ClientConfirmare.this, "nrTelefonSofer :"+nrTelefonSofer, Toast.LENGTH_SHORT).show();
-                if(senderId.length()<9)
-                    Toast.makeText(ClientConfirmare.this, "senderId :"+senderId, Toast.LENGTH_SHORT).show();
+                SimpleDateFormat simpleDateFormat = new SimpleDateFormat("EEEEEEE HH:mm:ss");
 
-                databaseReference.child("mesaj").push().setValue(new sms(nrTelefonSofer,senderId,true));
-                databaseReference.child("mesaj").child(smsid).setValue(null);
-                Toast.makeText(getApplicationContext(), "Comanda plasata!", Toast.LENGTH_SHORT).show();
-                mNotificationManager.cancel(notificationId);
-                finish();
+                Date currentTime = Calendar.getInstance().getTime();
+                    if(nrTelefonSofer.length()<9)
+                        Toast.makeText(ClientConfirmare.this, "nrTelefonSofer :"+nrTelefonSofer, Toast.LENGTH_SHORT).show();
+                    if(myPhoneNumber.length()<9)
+                        Toast.makeText(ClientConfirmare.this, "senderId :"+ myPhoneNumber, Toast.LENGTH_SHORT).show();
+
+                    databaseReference.child("mesaj").push().setValue(new sms(nrTelefonSofer, myPhoneNumber,true,timp, simpleDateFormat.format(currentTime)));
+                    databaseReference.child("mesaj").child(smsid).setValue(null);
+                    Toast.makeText(getApplicationContext(), "Comanda plasata!", Toast.LENGTH_SHORT).show();
+                    mNotificationManager.cancel(notificationId);
+                    finish();
 
             }
         });
@@ -76,7 +86,7 @@ public class ClientConfirmare extends Activity {
             @Override
             public void onClick(View view) {
                 databaseReference.child("mesaj").child(smsid).setValue(null);
-                databaseReference.child("mesaj").push().setValue(new sms(nrTelefonSofer,senderId,false));
+                databaseReference.child("mesaj").push().setValue(new sms(nrTelefonSofer, myPhoneNumber,false,timp));
                 Toast.makeText(getApplicationContext(), "Comanda anulata!", Toast.LENGTH_SHORT).show();
                 mNotificationManager.cancel(notificationId);
                 finish();

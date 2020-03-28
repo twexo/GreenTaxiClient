@@ -2,7 +2,6 @@ package com.twexdo.client;
 
 import android.Manifest;
 import android.content.Context;
-import android.content.Intent;
 import android.content.pm.PackageManager;
 import android.os.Build;
 import android.os.Bundle;
@@ -65,8 +64,8 @@ public class MainActivity extends AppCompatActivity {
                         Manifest.permission.READ_PHONE_STATE
                 }, 10);
             } else {
-                Intent i=new Intent(getApplicationContext(),MyService.class);
-                startService(i);
+//                Intent i=new Intent(getApplicationContext(),MyService.class);
+//                startService(i);
             }
         }
 
@@ -75,16 +74,16 @@ public class MainActivity extends AppCompatActivity {
     @Override
     protected void onDestroy() {
         super.onDestroy();
-        Intent i=new Intent(getApplicationContext(),MyService.class);
-        stopService(i);
+//        Intent i=new Intent(getApplicationContext(),MyService.class);
+//        stopService(i);
     }
 
     @Override
     public void onRequestPermissionsResult(int requestCode, @NonNull String[] permissions, @NonNull int[] grantResults) {
         if (requestCode == 10) {
             if (grantResults.length > 0 && grantResults[0] == PackageManager.PERMISSION_GRANTED) {
-                Intent i=new Intent(getApplicationContext(),MyService.class);
-                startService(i);
+//                Intent i=new Intent(getApplicationContext(),MyService.class);
+//                startService(i);
             }
             else{
                 Toast.makeText(getApplicationContext(), "Aveti nevoie e aceasta permisiune pentru a putea trimite mesaje", Toast.LENGTH_LONG).show();
